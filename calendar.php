@@ -123,14 +123,15 @@ p {
 date_default_timezone_set('UTC');
 $now = isset($_REQUEST['year']) ? strtotime($_REQUEST['year'].'-01-01') : time();
 $dates = array();
-$month = 1;
+$startMonth = 8;
+$month = $startMonth;
 $day = 1;
 echo '<p>'.date('Y', $now).'</p>';
 echo '<table>';
 echo '<thead>';
 echo '<tr>';
 // Add the month headings
-for($i = 1; $i <= 12; $i++) {
+for($i = $startMonth; $i <= 12; $i++) {
 	echo '<th>'.DateTime::createFromFormat('!m', $i)->format('M').'</th>';
 }
 echo '</tr>';
@@ -141,7 +142,7 @@ echo '<tbody>';
 $date = strtotime(date('Y', $now).'-01-01');
 $first_weekdays = array();
 
-for($x = 1; $x <= 12; $x++) {
+for($x = $startMonth; $x <= 12; $x++) {
 	$first_weekdays[$x] = date('N', strtotime(date('Y', $now).'-'.$x.'-01'));
 	$$x = false; // Set a flag for each month so we can track first days below
 }
@@ -177,7 +178,7 @@ while($month <= 12) {
 
 // Now produce the table
 
-$month = 1;
+$month = $startMonth;
 $day = 1;
 
 if(isset($_REQUEST['layout']) && $_REQUEST['layout'] == 'aligned-weekdays') {
@@ -204,7 +205,7 @@ if(isset($_REQUEST['layout']) && $_REQUEST['layout'] == 'aligned-weekdays') {
 			$month++;
 		}
 		echo '</tr>';
-		$month = 1;
+		$month = $startMonth;
 		$day++;
 	}
 	
@@ -235,7 +236,7 @@ else {
 			$month++;
 		}
 		echo '</tr>';
-		$month = 1;
+		$month = $startMonth;
 		$day++;
 	}
 }
